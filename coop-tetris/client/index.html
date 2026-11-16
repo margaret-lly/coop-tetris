@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>合作俄罗斯方块 · Co-op Tetris</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 背景装饰 -->
+    <div class="deco" aria-hidden="true">
+      <span class="d-halo"></span>
+      <span class="d-cross"></span>
+      <span class="d-spark s1">✦</span>
+      <span class="d-spark s2">✧</span>
+      <span class="d-spark s3">✦</span>
+      <span class="d-spark s4">✧</span>
+      <span class="d-spark s5">✦</span>
+      <span class="d-bat b1"></span>
+      <span class="d-bat b2"></span>
+      <span class="d-bat b3"></span>
+      <span class="d-spark s6">✦</span>
+      <span class="d-spark s7">✧</span>
+      <span class="d-spark s8">✦</span>
+      <span class="d-spark s9">✧</span>
+      <span class="d-cross c2"></span>
+      <span class="d-diamond"></span>
+      <span class="d-ring"></span>
+    </div>
+    <div class="cloud-lump cl-left" aria-hidden="true"></div>
+    <div class="cloud-lump cl-right" aria-hidden="true"></div>
+    <div class="clouds" aria-hidden="true"></div>
+
+    <!-- 主页：起房 / 加入 -->
+    <section id="home" class="screen home">
+      <!-- 四张原版立绘：左侧天使两张，右侧恶魔两张 -->
+      <div class="home-characters home-angel" aria-hidden="true">
+        <img class="home-character character-top" src="assets/angel_game.webp" alt="" />
+        <img class="home-character character-bottom" src="assets/angel_home.webp" alt="" />
+      </div>
+      <div class="home-characters home-demon" aria-hidden="true">
+        <img class="home-character character-top" src="assets/demon_game.webp" alt="" />
+        <img class="home-character character-bottom" src="assets/demon_home.webp" alt="" />
+      </div>
+
+      <div class="card">
+        <h1>合作俄罗斯方块 <i>✦</i></h1>
+        <p class="sub">同一张棋盘，你放一块，我放一块，一起消行。</p>
+
+        <label class="field" for="name-input">你的名字</label>
+        <div class="input-wrap">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.6" />
+            <path d="M4.8 20c0-4 3.2-6.2 7.2-6.2s7.2 2.2 7.2 6.2" />
+          </svg>
+          <input id="name-input" type="text" maxlength="16" placeholder="起个名字" />
+        </div>
+
+        <button id="create-btn" class="primary">✦ 创建房间</button>
+
+        <div class="divider"><span>或</span></div>
+
+        <div class="join-row">
+          <div class="input-wrap code">
+            <span class="hash">#</span>
+            <input id="code-input" type="text" maxlength="4" placeholder="房间码" />
+          </div>
+          <button id="join-btn" class="join-btn">加入<br />房间</button>
+        </div>
+
+        <p id="home-msg" class="msg"></p>
+        <div class="card-foot" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- 游戏页 -->
+    <section id="game" class="screen hidden">
+      <header class="topbar">
+        <h2>Co-op Tetris</h2>
+        <i class="star">✦</i>
+        <span class="rule"></span>
+        <span class="winctl" aria-hidden="true"><i></i><i></i><i></i></span>
+      </header>
+
+      <div class="game-body">
+        <aside class="side">
+          <div class="room-line">
+            <span>房间号</span>
+            <b id="room-code" class="chip"></b>
+          </div>
+
+          <div id="players" class="players"></div>
+
+          <div class="stats">
+            <div>得分 <b id="score">0</b></div>
+            <div>消行 <b id="lines">0</b></div>
+          </div>
+
+          <div id="turn-badge" class="turn">等待另一位玩家加入…</div>
+
+          <p class="hint">
+            ← / → 移动 · ↑ 旋转 · ↓ 下移 · 空格 落到底
+          </p>
+          <div class="side-note">
+            <span class="side-note-mark">✦</span>
+            <div>
+              <b>天使 × 恶魔</b>
+              <small>两个人，一张棋盘</small>
+            </div>
+            <span class="side-note-bat">⌁</span>
+          </div>
+        </aside>
+
+        <div class="board-wrap">
+          <div id="board" class="board"></div>
+          <div id="over" class="over hidden">
+            <div class="over-box">
+              <h3>游戏结束</h3>
+              <p id="over-stat"></p>
+              <button onclick="location.reload()">再来一局</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 两侧立绘：与参考图一致，天使在左下、恶魔在右下 -->
+        <figure class="game-character game-angel" aria-hidden="true">
+          <img src="assets/angel_home.webp" alt="" />
+          <span class="angel-halo">✧</span>
+        </figure>
+        <figure class="game-character game-demon" aria-hidden="true">
+          <img src="assets/demon_home.webp" alt="" />
+          <span class="demon-bubble">✦</span>
+        </figure>
+      </div>
+    </section>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="skin.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
